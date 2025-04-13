@@ -1,6 +1,12 @@
-from smart_rh.firebase.FirebaseAPI import FirebaseAPI
+from utils.FuncCadastroJob import FuncCadastroJob
+from utils.FuncVisualizarVagas import FuncVisualizarVagas
+import streamlit as st
 
-DATABASE_SECRET = "2Ah8BmXrPZCasGX1BX0BxwomYSbE6WU4TrHLynhi"
-DATABASE_URL = "https://smartrh-2025-46b3c-default-rtdb.firebaseio.com/"
+st.title("Smart RH")
 
-firebase = FirebaseAPI(database_url=DATABASE_URL, secret_key=DATABASE_SECRET)
+st.write("Bem-vindo ao Smart RH")
+
+
+st.sidebar.button("\U0001F4BC Cadastrar Vaga", on_click=FuncCadastroJob)
+
+st.sidebar.button("\U0001f4dd Visualizar Vagas", on_click=FuncVisualizarVagas)

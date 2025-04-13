@@ -1,6 +1,7 @@
+from typing import Dict, Any
 import requests
 import json
-from typing import Dict, Any
+
 
 class FirebaseAPI:
     def __init__(self, database_url: str, secret_key: str):
@@ -28,10 +29,15 @@ class FirebaseAPI:
         """
         return self._request(method="PUT", path=f"{collection}/{doc_id}", data=data)
     
-    def get_document(self, collection: str, doc_id: str) -> Dict[str, Any]:
+    def get_document(self, collection: str, doc_id: str = None) -> Dict[str, Any]:
         """Obtém um documento específico"""
-        return self._request(method="GET", path=f"{collection}/{doc_id}")
-    
+        path = collection if doc_id is None else f"{collection}/{doc_id}"
+        data = self._request("GET", path)
+        
+        if doc_id is None and data is None:
+            return {} 
+        return data
+
     def delete_document(self, collection: str, doc_id: str):
         """Remove um documento"""
         return self._request(method="DELETE", path=f"{collection}/{doc_id}")
