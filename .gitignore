@@ -2,3 +2,4 @@ serviceAccountKey.json
 .streamlit/secrets.toml
 .env
 __pycache__/
+.vscode/

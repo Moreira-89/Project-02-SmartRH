@@ -1,9 +1,6 @@
-import streamlit as st
+from smart_rh.firebase.FirebaseAPI import FirebaseAPI
 
-def run_smarth_rh():
+DATABASE_SECRET = "2Ah8BmXrPZCasGX1BX0BxwomYSbE6WU4TrHLynhi"
+DATABASE_URL = "https://smartrh-2025-46b3c-default-rtdb.firebaseio.com/"
 
-    st.title("Smart RH")
-
-
-if __name__ == "__main__":
-    run_smarth_rh()
+firebase = FirebaseAPI(database_url=DATABASE_URL, secret_key=DATABASE_SECRET)
