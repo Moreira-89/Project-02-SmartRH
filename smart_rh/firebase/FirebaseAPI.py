@@ -1,3 +1,4 @@
+from firebase_admin import storage
 from typing import Dict, Any
 import requests
 import json
@@ -41,4 +42,17 @@ class FirebaseAPI:
     def delete_document(self, collection: str, doc_id: str):
         """Remove um documento"""
         return self._request(method="DELETE", path=f"{collection}/{doc_id}")
+    
+    def upload_file(self, file, path: str, content_type: str) -> str:
+        """Faz upload de arquivo para o Firebase Storage"""
+        bucket = storage.bucket()
+        blob = bucket.blob(path)
+        
+        blob.upload_from_string(
+            file.getvalue(),
+            content_type=content_type
+        )
+        
+        blob.make_public()
+        return blob.public_url
             
