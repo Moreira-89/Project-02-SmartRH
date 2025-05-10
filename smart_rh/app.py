@@ -1,6 +1,6 @@
 from views.show_job_form import show_job_form
 from views.show_jobs_page import show_jobs_page
-from views.FunUploadFile import FunUploadFile
+from views.show_job_upload_file import show_job_upload_file
 from views.config_page import show_config_page
 import streamlit as st
 
@@ -31,7 +31,7 @@ with st.sidebar:
     if st.button("\U00002795 Cadastrar Vaga"):
         change_page("add_job")
     
-    if st.button("\U0001f4e4 Upload Currículos"):
+    if st.button("\U0001f4e4 Upload de Currículos"):
         change_page("upload_resumes")
     
     if st.button("\u2699 Configurações"):
@@ -45,7 +45,7 @@ if st.session_state.current_page == "home":
     st.markdown("""
     **Sistema de gerenciamento de vagas e currículos**
     
-    👈 Use o menu lateral para:
+    \U0001F448 Use o menu lateral para:
     - Visualizar vagas cadastradas
     - Cadastrar novas oportunidades
     - Enviar currículos
@@ -58,7 +58,7 @@ elif st.session_state.current_page == "add_job":
     show_job_form()
 
 elif st.session_state.current_page == "upload_resumes":
-    FunUploadFile()
+    show_job_upload_file()
 
 elif st.session_state.current_page == "config_page":
     show_config_page()

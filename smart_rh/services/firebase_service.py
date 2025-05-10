@@ -30,36 +30,29 @@ class FirebaseService:
             logger.error(f"Erro ao buscar vagas: {str(e)}")
             return []
 
-    def upload_resume(self, file, resume: Resume) -> str:
-        """Faz upload do arquivo para o Storage"""
+    def upload_resume_file(self, file, resume_id: str) -> str:
+        """Faz upload do arquivo para o Storage e retorna a URL"""
         try:
-            blob = self.bucket.blob(f"curriculos/{resume.id}/{file.name}")
+            file_extension = file.name.split('.')[-1]
+            file_path = f"curriculos/{resume_id}/curriculo.{file_extension}"
+            
+            blob = self.bucket.blob(file_path)
             blob.upload_from_string(
                 file.getvalue(),
                 content_type=file.type,
                 timeout=300
             )
             blob.make_public()
-            logger.info(f"Arquivo {file.name} enviado")
             return blob.public_url
         except Exception as e:
             logger.error(f"Erro no upload: {str(e)}")
             raise
 
-    def create_resume_record(self, resume: Resume) -> None:
-        """Salva metadados no Realtime Database"""
+    def create_resume(self, resume: Resume) -> dict:
+        """Salva os metadados do currículo"""
         try:
             self.rtdb.child(f"curriculos/{resume.id}").set(resume.dict())
-            logger.info(f"Metadados salvos: {resume.id}")
+            return {"status": "success", "id": resume.id}
         except Exception as e:
-            logger.error(f"Erro ao salvar metadados: {str(e)}")
+            logger.error(f"Erro ao salvar currículo: {str(e)}")
             raise
-
-    def get_resumes_by_job(self, job_id: str) -> List[Resume]:
-        """Lista currículos de uma vaga"""
-        try:
-            resumes = self.rtdb.child("curriculos").order_by_child("job_id").equal_to(job_id).get()
-            return [Resume(**resume) for resume in resumes.values()] if resumes else []
-        except Exception as e:
-            logger.error(f"Erro ao buscar currículos: {str(e)}")
-            return []

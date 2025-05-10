@@ -10,3 +10,4 @@ class Resume(BaseModel):
     file_size: str
     upload_date: str = datetime.now().isoformat()
     status: str = "pending"
+    analysis: str = None
