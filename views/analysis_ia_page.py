@@ -67,17 +67,11 @@ def show_analysis_page():
                 key="resume_uploader"
             )
 
-            col1, col2 = st.columns([1, 1])
-            with col1:
-                analysis_button = st.button(
-                    "\U0001f50e Executar Análise com IA", 
-                    type="primary", 
-                    disabled=not uploaded_file
-                )
-            
-            with col2:
-                if uploaded_file:
-                    st.markdown(f"**Arquivo:** {uploaded_file.name}")
+            analysis_button = st.button(
+                "\U0001f50e Executar Análise com IA", 
+                type="primary", 
+                disabled=not uploaded_file
+            )
 
             if uploaded_file and analysis_button:
                 with st.spinner("Processando análise - Isso pode levar alguns minutos..."):
@@ -85,14 +79,12 @@ def show_analysis_page():
                         progress_bar = st.progress(0)
                         status_text = st.empty()
                         
-                        # Etapa 1: Salvar o arquivo temporariamente
                         status_text.text("Processando arquivo...")
                         with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[1]) as tmp_file:
                             tmp_file.write(uploaded_file.getvalue())
                             tmp_path = tmp_file.name
                         progress_bar.progress(10)
                         
-                        # Etapa 2: Extrair texto do arquivo
                         status_text.text("Extraindo texto do currículo...")
                         try:
                             cv_text = read_file(tmp_path)
@@ -102,17 +94,14 @@ def show_analysis_page():
                             return
                         progress_bar.progress(30)
                         
-                        # Etapa 3: Processamento com IA
                         status_text.text("Gerando resumo com IA...")
                         markdown_summary = langchain.resume_cv(cv_text)
                         progress_bar.progress(60)
                         
-                        # Etapa 4: Cálculo da pontuação
                         status_text.text("Calculando compatibilidade com a vaga...")
                         score = langchain.generate_score(cv_text, selected_job.prerequisites) 
                         progress_bar.progress(80)
                         
-                        # Etapa 5: Extração de dados estruturados
                         status_text.text("Finalizando análise...")
                         analysis = extract_data_analysis(
                             resume_cv=markdown_summary,
@@ -121,7 +110,6 @@ def show_analysis_page():
                             score=score
                         )
                         
-                        # Etapa 6: Salvar no Firebase
                         firebase.create_analysis(analysis)
                         progress_bar.progress(100)
                         status_text.empty()
@@ -147,10 +135,8 @@ def _display_analysis_results(analysis: Analysis, langchain, cv_text, selected_j
     """Exibe os resultados formatados corretamente"""
     st.divider()
     
-    # Cabeçalho
     st.markdown(f"## {analysis.name}")
     
-    # Pontuação com cor condicional e emoji
     score = analysis.score
     if score >= 8:
         score_color = "#2ecc71"
@@ -174,11 +160,9 @@ def _display_analysis_results(analysis: Analysis, langchain, cv_text, selected_j
         unsafe_allow_html=True
     )
     
-    # Criação de abas para melhor organização
     tab1, tab2 = st.tabs(["📊 Análise Básica", "📝 Análise Detalhada"])
     
     with tab1:
-        # Seções organizadas em colunas
         col1, col2 = st.columns(2)
         
         with col1:
@@ -213,14 +197,8 @@ def _display_analysis_results(analysis: Analysis, langchain, cv_text, selected_j
                 st.error("Não foi possível gerar a análise detalhada.")
                 logger.error(f"Erro na geração de análise detalhada: {str(e)}")
     
-    # Opções de ação
     st.divider()
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("\U0001f504 Fazer Nova Análise"):
-            st.session_state.current_page = "analysis_job"
-            st.rerun()
-    with col2:
-        if st.button("\U0001f4cb Ver Outras Vagas"):
-            st.session_state.current_page = "view_jobs"
-            st.rerun()
+
+    if st.button("\U0001f504 Fazer Nova Análise"):
+        st.session_state.current_page = "analysis_job"
+        st.rerun()
