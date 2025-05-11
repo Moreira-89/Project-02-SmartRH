@@ -7,8 +7,6 @@
 
 Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades utilizando processamento de linguagem natural para analisar currículos e vagas.
 
-![Smart RH Demo](https://via.placeholder.com/800x400?text=Smart+RH+Demo)
-
 ## 📋 Índice
 
 - [Visão Geral](#-visão-geral)
