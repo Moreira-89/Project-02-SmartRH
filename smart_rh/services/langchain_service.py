@@ -1,4 +1,4 @@
-from config.langchain_config import LangChainConfig
+from smart_rh.config.langchain_config import LangChainConfig
 from typing import Optional
 import logging
 import re

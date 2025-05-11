@@ -1,4 +1,4 @@
-from services.firebase_service import FirebaseService
+from smart_rh.services.firebase_service import FirebaseService
 import streamlit as st
 
 def show_jobs_page():

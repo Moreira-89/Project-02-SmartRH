@@ -1,5 +1,5 @@
-from services.firebase_service import FirebaseService
-from models.job import Job
+from smart_rh.services.firebase_service import FirebaseService
+from smart_rh.models.job import Job
 
 class JobController:
     def __init__(self):

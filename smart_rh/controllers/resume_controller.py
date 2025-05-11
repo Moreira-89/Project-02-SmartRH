@@ -1,5 +1,5 @@
-from services.firebase_service import FirebaseService
-from models.resume import Resume
+from smart_rh.services.firebase_service import FirebaseService
+from smart_rh.models.resume import Resume
 from typing import List
 import uuid
 import re

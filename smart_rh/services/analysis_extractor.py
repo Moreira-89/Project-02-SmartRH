@@ -5,7 +5,7 @@ import logging
 from typing import List, Dict, Any, Union, Optional
 from pdfminer.high_level import extract_text
 from docx import Document
-from models.analysis import Analysis
+from smart_rh.models.analysis import Analysis
 
 logger = logging.getLogger(__name__)
 
