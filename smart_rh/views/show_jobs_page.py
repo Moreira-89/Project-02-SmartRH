@@ -20,7 +20,7 @@ def show_jobs_page():
 
         # Mostra uma vaga por vez em seções expansíveis
         for vaga in vagas:
-            with st.expander(f"\U0001f539 {vaga.title} (ID: {vaga.id})", expanded=False):
+            with st.expander(f"\U0001f539 {vaga.title}", expanded=False):
                 st.markdown("**Atividades:**")
                 st.write(vaga.main_activity)
                 

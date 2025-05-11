@@ -1,6 +1,7 @@
 from config.firebase_config import FirebaseConfig
 from models.job import Job
 from models.resume import Resume
+from models.analysis import Analysis
 from typing import List, Optional, Dict
 import logging
 
@@ -55,4 +56,14 @@ class FirebaseService:
             return {"status": "success", "id": resume.id}
         except Exception as e:
             logger.error(f"Erro ao salvar currículo: {str(e)}")
+            raise
+
+    def create_analysis(self, analysis: Analysis) -> dict:
+        try:
+            analysis_data = analysis.dict()
+            self.rtdb.child(f"analises/{analysis.id}").set(analysis_data)
+            logger.info(f"Dados salvos: {str(analysis_data)[:200]}...")
+            return {"status": "success", "id": analysis.id}
+        except Exception as e:
+            logger.error(f"Erro completo ao salvar: {str(e)}")
             raise
