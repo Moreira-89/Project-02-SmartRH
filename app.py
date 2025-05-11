@@ -1,7 +1,6 @@
 from views.show_jobs_page import show_jobs_page
 from views.show_job_form import show_job_form
 from views.show_job_upload_file import show_job_upload_file
-from views.config_page import show_config_page
 from views.analysis_ia_page import show_analysis_page
 import streamlit as st
 
@@ -38,9 +37,6 @@ with st.sidebar:
     if st.button("\U0001f4e4 Upload de Currículos"):
         change_page("upload_resumes")
     
-    if st.button("\u2699 Configurações"):
-        change_page("config_page")
-    
     st.markdown("---")
 
     st.caption("v1.0 | © 2025 Smart RH")
@@ -52,10 +48,10 @@ if st.session_state.current_page == "home":
     Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades.  
     
     \U0001f680 **Funcionalidades:**  
-    - \U0001f4bc Cadastrar vagas detalhadas  
+    - \U0001f4bc Cadastrar vagas detalhadas
+    - \U0001f4ca Análise por IA
     - \U0001f50d Visualizar oportunidades disponíveis  
     - \U0001f4e5 Upload de Currículos (em breve)  
-    - \U0001f4ca Análise por IA (em desenvolvimento)  
     """)
     st.divider()
 
@@ -67,9 +63,6 @@ elif st.session_state.current_page == "add_job":
 
 elif st.session_state.current_page == "upload_resumes":
     show_job_upload_file()
-
-elif st.session_state.current_page == "config_page":
-    show_config_page()
 
 elif st.session_state.current_page == "analysis_job":
     show_analysis_page()

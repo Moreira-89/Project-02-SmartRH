@@ -3,9 +3,8 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.39.0-FF4B4B.svg)](https://streamlit.io/)
 [![Firebase](https://img.shields.io/badge/Firebase-Admin-yellow.svg)](https://firebase.google.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades utilizando processamento de linguagem natural para analisar currículos e vagas.
+Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades utilizando processamento de linguagem natural para analisar currículos e vagas. Clique [aqui]("https://smart-rh.streamlit.app/") para acessar a aplicação web!
 
 ## 📋 Índice
 
@@ -22,37 +21,64 @@ Sistema inteligente de recrutamento que conecta candidatos às melhores oportuni
 
 ## 🔍 Visão Geral
 
-Smart RH é uma aplicação web desenvolvida com Streamlit que auxilia profissionais de recrutamento e seleção a analisar currículos de forma inteligente, comparando-os com os requisitos das vagas cadastradas. O sistema utiliza processamento o modelo Llama-3.3-70b natural para extrair informações relevantes dos currículos e calcular um score de compatibilidade com as vagas disponíveis.
+Smart RH é uma aplicação web desenvolvida com Streamlit que auxilia profissionais de recrutamento e seleção a analisar currículos de forma inteligente, comparando-os com os requisitos das vagas cadastradas. O sistema utiliza o modelo Llama-3.3-70b para extrair informações relevantes dos currículos e calcular um score de compatibilidade com as vagas disponíveis.
 
 ## 🚀 Funcionalidades
 
-- **Cadastro de Vagas**: Interface intuitiva para adicionar novas oportunidades com descrição detalhada, requisitos e diferenciais.
-- **Visualização de Vagas**: Listagem de todas as vagas cadastradas no sistema com detalhes expansíveis.
-- **Análise de Currículos com IA**: Upload de currículos em formato PDF/DOCX e análise automática com algoritmos de processamento de linguagem natural.
-- **Score de Compatibilidade**: Cálculo automático da pontuação de compatibilidade entre currículos e vagas (0-10).
-- **Análise Detalhada**: Extração de informações como habilidades técnicas, formação acadêmica e idiomas.
-- **Recomendações Personalizadas**: Sugestões de melhorias para os candidatos com base na análise do currículo.
+- **🧠 Análise de Currículos com IA**: Upload e análise automática de currículos com algoritmos avançados de processamento de linguagem natural
+- **📊 Compatibilidade Inteligente**: Score de 0-10 entre currículos e vagas cadastradas
+- **📝 Cadastro Detalhado de Vagas**: Interface intuitiva para recrutar com informações completas sobre requisitos
+- **📋 Gestão de Oportunidades**: Visualização organizada de todas as vagas disponíveis
+- **📄 Extração Automática de Dados**: Identificação de habilidades, formação acadêmica, experiências e idiomas
+- **💡 Insights Personalizados**: Recomendações para candidatos com base na análise do perfil
 
 ## 💻 Tecnologias
 
-- **Frontend**: Streamlit
-- **Backend**: Python
-- **Banco de Dados**: Firebase Realtime Database
-- **Processamento de Linguagem Natural**: LangChain com Groq
-- **Extração de Texto**: PyMuPDF
+<p align="center">
+  <img src="https://img.shields.io/badge/Backend-Python%20|%20Streamlit-blue" alt="Backend"/>
+  <img src="https://img.shields.io/badge/IA-LangChain%20|%20Llama--3.3--70b-green" alt="IA"/>
+  <img src="https://img.shields.io/badge/Database-Firebase%20Realtime%20DB-yellow" alt="Database"/>
+</p>
+
+- **Frontend**: [Streamlit](https://streamlit.io/) - Framework Python para criação de aplicações web de dados
+- **Backend**: Python 3.9+ - Linguagem principal para lógica de negócio e processamento
+- **Banco de Dados**: [Firebase Realtime Database](https://firebase.google.com/) - Armazenamento em tempo real na nuvem
+- **NLP**: [LangChain](https://python.langchain.com/) com [Groq](https://groq.com/) - Framework para aplicações baseadas em LLMs
+- **Modelo de IA**: Llama-3.3-70b - Modelo de linguagem de ponta
+- **Parser de Documentos**: PyMuPDF, python-docx - Extração de texto de PDFs e DOCXs
+
 
 ## 🏗️ Arquitetura
 
-O projeto segue uma arquitetura MVC (Model-View-Controller) adaptada:
+O projeto segue uma arquitetura MVC (Model-View-Controller) adaptada para aplicações Streamlit:
 
 ```
 smart_rh/
 ├── app.py                  # Ponto de entrada da aplicação
-├── config/                 # Configurações do Firebase e LangChain
+├── config/                 # Configurações (Firebase, LangChain)
+│   ├── __init__.py
+│   ├── firebase_config.py  # Configuração do Firebase
+│   └── langchain_config.py # Configuração do LangChain
 ├── controllers/            # Controladores da aplicação
+│   ├── __init__.py
+│   ├── job_controller.py   # Controlador de vagas
+│   └── resume_controller.py # Controlador de currículos
 ├── models/                 # Modelos de dados (Pydantic)
-├── services/               # Serviços de negócio e integração
-└── views/                  # Interfaces visuais do Streamlit
+│   ├── __init__.py
+│   ├── analysis.py         # Modelo de análise
+│   ├── job.py              # Modelo de vaga
+│   └── resume.py           # Modelo de currículo
+├── services/               # Serviços de negócio
+│   ├── __init__.py
+│   ├── analysis_extractor.py # Extração de dados de currículos
+│   ├── firebase_service.py   # Serviço Firebase (DB e Storage)
+│   └── langchain_service.py  # Serviço de IA
+└── views/                  # Interfaces Streamlit
+    ├── __init__.py
+    ├── analysis_ia_page.py   # Página de análise IA
+    ├── show_job_form.py      # Formulário de vagas
+    ├── show_job_upload_file.py # Upload de currículos
+    └── show_jobs_page.py     # Página de visualização de vagas
 ```
 
 ## 📦 Instalação
@@ -118,9 +144,3 @@ Contribuições são bem-vindas! Para contribuir:
 3. Faça commit das suas alterações (`git commit -am 'Adiciona nova funcionalidade'`)
 4. Faça push para a branch (`git push origin feature/nova-funcionalidade`)
 5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
