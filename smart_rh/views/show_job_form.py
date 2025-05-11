@@ -3,8 +3,14 @@ from models.job import Job
 import streamlit as st
 
 def show_job_form():
+
     st.markdown("### \U00002795 Cadastrar Nova Vaga")
-    st.divider()
+    st.markdown("""
+    **\U0001f4d6 Descrição:**  
+    Nesta página você pode cadastrar novas vagas para que candidatos possam se candidatar.  
+                
+    \U0001f4a1 *Após cadastrar uma vaga, nossa IA vai poder analisar o curriculo que você fez upload em **Análise com IA** e verificar se a vaga que escolheu tem algum matche com seu curriculo!*
+    """)
 
     with st.form("job_form", clear_on_submit=True):
 

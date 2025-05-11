@@ -2,7 +2,12 @@ import streamlit as st
 
 def show_job_upload_file():
     st.markdown("### \U0001f4e4 Upload de Currículos")
-    st.divider()
+    st.markdown("""
+    **\U0001f4c3 Descrição:**  
+    Página para envio de currículos (em breve!).  
+                
+    \U0001f4da *Quando disponível, você poderá enviar seu CV e nossa IA mostrará as vagas com melhor compatibilidade.*
+    """)
     
     st.markdown("""
     <div style='text-align: center; padding: 2rem; border: 2px dashed #666; border-radius: 1rem;'>

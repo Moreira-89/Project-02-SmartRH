@@ -7,7 +7,12 @@ def show_jobs_page():
         vagas = service.get_jobs()
 
         st.markdown("### \U0001f4cb Vagas Disponíveis")
-        st.divider()
+        st.markdown("""
+        **\U0001f50d Descrição:**  
+        Aqui você visualiza todas as vagas cadastradas no sistema.  
+                    
+        \U0001f4ca *Cada vaga mostra os requisitos e diferenciais para ajudar na análise dos candidatos.*
+        """)
 
         if not vagas:
             st.warning("Nenhuma vaga cadastrada", icon="⚠️")
