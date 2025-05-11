@@ -3,15 +3,12 @@ import tempfile
 import logging
 import os
 import uuid
-from smart_rh.services.firebase_service import FirebaseService
-from smart_rh.models.job import Job
-from smart_rh.models.analysis import Analysis
-from smart_rh.services.analysis_extractor import (
-    read_file,
-    extract_data_analysis
-)
-from smart_rh.services.langchain_service import LangChainService
-from smart_rh.config.langchain_config import LangChainConfig
+from services.firebase_service import FirebaseService
+from models.job import Job
+from models.analysis import Analysis
+from services.analysis_extractor import  read_file, extract_data_analysis
+from services.langchain_service import LangChainService
+from config.langchain_config import LangChainConfig
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

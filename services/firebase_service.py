@@ -1,7 +1,7 @@
-from smart_rh.config.firebase_config import FirebaseConfig
-from smart_rh.models.job import Job
-from smart_rh.models.resume import Resume
-from smart_rh.models.analysis import Analysis
+from config.firebase_config import FirebaseConfig
+from models.job import Job
+from models.resume import Resume
+from models.analysis import Analysis
 from typing import List, Optional, Dict
 import logging
 

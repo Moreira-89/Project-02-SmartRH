@@ -1,8 +1,8 @@
-from smart_rh.views.show_jobs_page import show_jobs_page
-from smart_rh.views.show_job_form import show_job_form
-from smart_rh.views.show_job_upload_file import show_job_upload_file
-from smart_rh.views.config_page import show_config_page
-from smart_rh.views.analysis_ia_page import show_analysis_page
+from views.show_jobs_page import show_jobs_page
+from views.show_job_form import show_job_form
+from views.show_job_upload_file import show_job_upload_file
+from views.config_page import show_config_page
+from views.analysis_ia_page import show_analysis_page
 import streamlit as st
 
 
