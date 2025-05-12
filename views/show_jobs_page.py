@@ -6,6 +6,10 @@ def show_jobs_page():
         service = FirebaseService()
         vagas = service.get_jobs()
 
+        if st.button("← Voltar para Home"):
+            st.session_state.current_page = "home"
+            st.rerun()
+
         st.markdown("### \U0001f4cb Vagas Disponíveis")
         st.markdown("""
         **\U0001f50d Descrição:**  

@@ -1,6 +1,11 @@
 import streamlit as st
 
 def show_job_upload_file():
+
+    if st.button("← Voltar para Home"):
+        st.session_state.current_page = "home"
+        st.rerun()
+        
     st.markdown("### \U0001f4e4 Upload de Currículos")
     st.markdown("""
     **\U0001f4c3 Descrição:**  

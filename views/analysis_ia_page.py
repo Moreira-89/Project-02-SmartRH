@@ -14,6 +14,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def show_analysis_page():
+
+    if st.button("← Voltar para Home"):
+        st.session_state.current_page = "home"
+        st.rerun()
+        
     st.markdown("### \U0001f50e Análise de Compatibilidade IA")
     st.markdown("""
     **\U0001f4a1 Passo a Passo:**

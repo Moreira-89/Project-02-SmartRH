@@ -7,6 +7,10 @@ import re
 
 def show_job_form():
 
+    if st.button("← Voltar para Home"):
+        st.session_state.current_page = "home"
+        st.rerun()
+
     st.markdown("### \U00002795 Cadastrar Nova Vaga")
     st.markdown("""
     **\U0001f4d6 Descrição:**  
