@@ -161,7 +161,7 @@ def show_job_form():
                 st.selectbox(
                     "Nível de Senioridade",
                     options=["Jovem Aprendiz", "Estagiário", "Júnior", "Pleno", "Sênior", "Especialista", "Não especificado"],
-                    index=4,
+                    index=6,
                     help="Será utilizado em futuras atualizações"
                 )
 
