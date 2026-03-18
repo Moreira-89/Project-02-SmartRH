@@ -1,13 +1,16 @@
 from langchain_groq import ChatGroq
-import streamlit as st
 from typing import Optional
+from dotenv import load_dotenv
+import os
+
 
 class LangChainConfig():
     def __init__(self, model_id: str = "llama-3.3-70b-versatile"):
         try:
+            load_dotenv()
             self.model_id = model_id
             self.client = ChatGroq(
-                api_key=st.secrets["LANGCHAIN_GROG"]["API_KEY"],
+                api_key=os.getenv("LANGCHAIN_GROQ_API_KEY", ""),
                 model=self.model_id
             )
         except Exception as e:

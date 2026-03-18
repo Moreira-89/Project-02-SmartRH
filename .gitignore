@@ -1,5 +1,11 @@
+*.db
+.web
+*.py[cod]
+assets/external/
+.states
 serviceAccountKey.json
 .streamlit/secrets.toml
 .env
 __pycache__/
 .vscode/
+.venv
