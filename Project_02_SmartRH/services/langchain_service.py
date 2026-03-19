@@ -1,4 +1,4 @@
-from config.langchain_config import LangChainConfig
+from Project_02_SmartRH.config.langchain_config import LangChainConfig
 from typing import Optional
 import logging
 import re
@@ -16,7 +16,7 @@ class LangChainService():
         try:
             result_raw = self.llm.generate_response(prompt)
 
-            result = result_raw.split('```markdown')[1]
+            result = result_raw.split('```markdown')[1] #type: ignore
         except:
             result = result_raw
 
@@ -74,7 +74,10 @@ class LangChainService():
             
             Vaga que o candidato está se candidatando
             
-            {job}
+            Título da Vaga: {job.title if job else "Não informado"}
+            Atividades Principais: {job.main_activity if job else "Não informado"}
+            Pré-requisitos: {job.prerequisites if job else "Não informado"}
+            Diferenciais: {job.differentials if job and job.differentials else "Nenhum"}
 
             **Formato Exigido:**
             A resposta DEVE conter APENAS:
@@ -100,7 +103,7 @@ class LangChainService():
         # Fallback se todas as tentativas falharem
         return 0.0
     
-    def extract_score_from_result(self, result_raw: str) -> Optional[float]:
+    def extract_score_from_result(self, result_raw: Optional[str]) -> Optional[float]:
         '''Extrai a pontuação final com tratamento robusto'''
         patterns = [
             r"(?i)Pontuação Final\s*:\s*([0-9]+\.[0-9])",
@@ -125,7 +128,7 @@ class LangChainService():
                     
         return None
     
-    def generate_opnion(self, cv, job):
+    def generate_opinion(self, cv, job):
         prompt = f"""
         Gere uma análise detalhada em formato Markdown contendo:
 
@@ -142,7 +145,7 @@ class LangChainService():
         {cv[:8000]}
 
         E nos requisitos da vaga:
-        {job[:2000]}
+        {job.prerequisites if job else "Não informado"}
         """
         response = self.llm.generate_response(prompt)
         return response if response else "*Análise não disponível*"

@@ -5,7 +5,7 @@ import logging
 from typing import List, Dict, Any, Union, Optional
 from pdfminer.high_level import extract_text
 from docx import Document
-from models.analysis import Analysis
+from Project_02_SmartRH.models.analysis import Analysis
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ def extract_markdown_sections(text: str) -> Dict[str, Any]:
                 if section == "name":
                     sections[section] = clean_item(match.group(2))
                 else:
-                    content = match.group(match.lastindex).strip()
+                    content = match.group(match.lastindex).strip() #type: ignore
                     sections[section] = parse_list_items(content)
         except Exception as e:
             logger.error(f"Erro ao extrair seção {section}: {str(e)}")

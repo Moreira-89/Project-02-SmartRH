@@ -1,6 +1,7 @@
 from langchain_groq import ChatGroq
 from typing import Optional
 from dotenv import load_dotenv
+from pydantic import SecretStr
 import os
 
 
@@ -10,7 +11,7 @@ class LangChainConfig():
             load_dotenv()
             self.model_id = model_id
             self.client = ChatGroq(
-                api_key=os.getenv("LANGCHAIN_GROQ_API_KEY", ""),
+                api_key=SecretStr(os.getenv("LANGCHAIN_GROQ_API_KEY", "")),
                 model=self.model_id
             )
         except Exception as e:
@@ -19,7 +20,10 @@ class LangChainConfig():
     def generate_response(self, prompt: str) -> Optional[str]:
         try:
             response = self.client.invoke(prompt)
-            return response.content
+            content = response.content
+            if isinstance(content, list):
+                return str(content)
+            return content
         except Exception as e:
             print(f"Erro na geração de resposta: {str(e)}")
             return None

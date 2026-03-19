@@ -1,8 +1,7 @@
-from config.firebase_config import FirebaseConfig
-from models.job import Job
-from models.resume import Resume
-from models.analysis import Analysis
-from typing import List, Optional, Dict
+from Project_02_SmartRH.config.firebase_config import FirebaseConfig
+from Project_02_SmartRH.models.job import Job
+from Project_02_SmartRH.models.resume import Resume
+from Project_02_SmartRH.models.analysis import Analysis
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -26,10 +25,19 @@ class FirebaseService:
     def get_jobs(self) -> list[Job]:
         try:
             jobs = self.rtdb.child("vagas").get()
-            return [Job(**job) for job in jobs.values()] if jobs else []
+            return [Job(**dict(job)) for job in jobs.values()] if jobs else [] #type: ignore
         except Exception as e:
             logger.error(f"Erro ao buscar vagas: {str(e)}")
             return []
+        
+    def get_job(self, job_id: str) -> Job | None:
+        try:
+            job = self.rtdb.child(f"vagas/{job_id}").get()
+            return Job(**dict(job)) if job else None
+        except Exception as e:
+            logger.error(f"Erro ao buscar vaga: {str(e)}")
+            return None
+
 
     def upload_resume_file(self, file, resume_id: str) -> str:
         """Faz upload do arquivo para o Storage e retorna a URL"""

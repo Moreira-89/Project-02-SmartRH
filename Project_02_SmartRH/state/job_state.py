@@ -1,7 +1,7 @@
 import reflex as rx
 from typing import Optional
-from models.job import Job
-from services.firebase_service import FirebaseService
+from Project_02_SmartRH.models.job import Job
+from Project_02_SmartRH.services.firebase_service import FirebaseService
 
 
 class JobFormState(rx.State):
