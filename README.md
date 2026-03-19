@@ -101,7 +101,7 @@ Project-02-SmartRH/
 1. Crie um projeto no [Firebase](https://console.firebase.google.com/)
 2. Configure um Realtime Database e Storage
 3. Gere uma chave privada para o SDK Admin
-4. Crie um arquivo `.streamlit/secrets.toml` com as seguintes configurações:
+4. Crie um arquivo `.env` com as seguintes configurações:
 
 ```toml
 [FIREBASE]
