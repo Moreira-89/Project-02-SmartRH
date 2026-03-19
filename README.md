@@ -1,10 +1,10 @@
 # Smart RH 💼
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.39.0-FF4B4B.svg)](https://streamlit.io/)
+[![Reflex](https://img.shields.io/badge/Reflex-Framework-black.svg)](https://reflex.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-Admin-yellow.svg)](https://firebase.google.com/)
 
-Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades utilizando processamento de linguagem natural para analisar currículos e vagas. Clique [aqui](https://smart-rh.streamlit.app/) para acessar a aplicação web!
+Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades utilizando processamento de linguagem natural para analisar currículos e vagas.
 
 ## 📋 Índice
 
@@ -21,7 +21,7 @@ Sistema inteligente de recrutamento que conecta candidatos às melhores oportuni
 
 ## 🔍 Visão Geral
 
-Smart RH é uma aplicação web desenvolvida com Streamlit que auxilia profissionais de recrutamento e seleção a analisar currículos de forma inteligente, comparando-os com os requisitos das vagas cadastradas. O sistema utiliza o modelo Llama-3.3-70b para extrair informações relevantes dos currículos e calcular um score de compatibilidade com as vagas disponíveis.
+Smart RH é uma aplicação web desenvolvida com Reflex que auxilia profissionais de recrutamento e seleção a analisar currículos de forma inteligente, comparando-os com os requisitos das vagas cadastradas. O sistema utiliza o modelo Llama-3.3-70b para extrair informações relevantes dos currículos e calcular um score de compatibilidade com as vagas disponíveis.
 
 ## 🚀 Funcionalidades
 
@@ -35,12 +35,12 @@ Smart RH é uma aplicação web desenvolvida com Streamlit que auxilia profissio
 ## 💻 Tecnologias
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Backend-Python%20|%20Streamlit-blue" alt="Backend"/>
+  <img src="https://img.shields.io/badge/Backend-Python%20|%20Reflex-blue" alt="Backend"/>
   <img src="https://img.shields.io/badge/IA-LangChain%20|%20Llama--3.3--70b-green" alt="IA"/>
   <img src="https://img.shields.io/badge/Database-Firebase%20Realtime%20DB-yellow" alt="Database"/>
 </p>
 
-- **Frontend**: [Streamlit](https://streamlit.io/) - Framework Python para criação de aplicações web de dados
+- **Frontend & Backend**: [Reflex](https://reflex.dev/) - Framework Python moderno para criação de aplicações web completas
 - **Backend**: Python 3.9+ - Linguagem principal para lógica de negócio e processamento
 - **Banco de Dados**: [Firebase Realtime Database](https://firebase.google.com/) - Armazenamento em tempo real na nuvem
 - **NLP**: [LangChain](https://python.langchain.com/) com [Groq](https://groq.com/) - Framework para aplicações baseadas em LLMs
@@ -50,35 +50,31 @@ Smart RH é uma aplicação web desenvolvida com Streamlit que auxilia profissio
 
 ## 🏗️ Arquitetura
 
-O projeto segue uma arquitetura MVC (Model-View-Controller) adaptada para aplicações Streamlit:
+O projeto foi refatorado para utilizar a arquitetura moderna baseada em **Componentes (Pages)** e **Estado (State)** adaptada para aplicações Reflex:
 
-```
-smart_rh/
-├── app.py                  # Ponto de entrada da aplicação
-├── config/                 # Configurações (Firebase, LangChain)
-│   ├── __init__.py
-│   ├── firebase_config.py  # Configuração do Firebase
-│   └── langchain_config.py # Configuração do LangChain
-├── controllers/            # Controladores da aplicação
-│   ├── __init__.py
-│   ├── job_controller.py   # Controlador de vagas
-│   └── resume_controller.py # Controlador de currículos
-├── models/                 # Modelos de dados (Pydantic)
-│   ├── __init__.py
-│   ├── analysis.py         # Modelo de análise
-│   ├── job.py              # Modelo de vaga
-│   └── resume.py           # Modelo de currículo
-├── services/               # Serviços de negócio
-│   ├── __init__.py
-│   ├── analysis_extractor.py # Extração de dados de currículos
-│   ├── firebase_service.py   # Serviço Firebase (DB e Storage)
-│   └── langchain_service.py  # Serviço de IA
-└── views/                  # Interfaces Streamlit
-    ├── __init__.py
-    ├── analysis_ia_page.py   # Página de análise IA
-    ├── show_job_form.py      # Formulário de vagas
-    ├── show_job_upload_file.py # Upload de currículos
-    └── show_jobs_page.py     # Página de visualização de vagas
+```text
+Project-02-SmartRH/
+├── rxconfig.py                      # Configurações gerais do app Reflex
+└── Project_02_SmartRH/              # Diretório raiz do projeto principal
+    ├── Project_02_SmartRH.py        # Ponto de entrada (Registro de Páginas/Rotas)
+    ├── config/                      # Configurações e variáveis de ambiente
+    │   ├── firebase_config.py
+    │   └── langchain_config.py
+    ├── models/                      # Estruturas de dados (Pydantic)
+    │   ├── analysis.py
+    │   ├── job.py
+    │   └── resume.py
+    ├── pages/                       # Componentes de UI e Telas
+    │   ├── add_job.py
+    │   ├── analisar_curriculo.py
+    │   └── show_jobs_page.py
+    ├── state/                       # Lógica de interface e estado global
+    │   ├── analise_state.py
+    │   └── listjob_state.py
+    └── services/                    # Lógica de negócio, IA e integrações
+        ├── analysis_extractor.py
+        ├── firebase_service.py
+        └── langchain_service.py
 ```
 
 ## 📦 Instalação
@@ -123,11 +119,11 @@ API_KEY = "seu-api-key-groq"
 
 1. Inicie a aplicação:
    ```bash
-   cd smart_rh
-   streamlit run app.py
+   # Na pasta raiz onde está o rxconfig.py
+   reflex run
    ```
 
-2. Acesse a aplicação em seu navegador em `http://localhost:8501`
+2. Acesse a aplicação em seu navegador em `http://localhost:3000`
 
 3. Fluxo básico:
    - Cadastre uma nova vaga em "Cadastrar Vaga"
