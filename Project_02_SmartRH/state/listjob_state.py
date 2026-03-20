@@ -13,3 +13,7 @@ class ListJobsState(rx.State):
     def analisar_vaga_selecionada(self, vaga_id: str):
         self.vaga_selecionada_id = vaga_id
         return rx.redirect("/analisar-curriculo")
+    
+    @rx.var
+    def lista_opcoes_vagas(self) -> list[str]:
+        return [vaga.title for vaga in self.vagas]

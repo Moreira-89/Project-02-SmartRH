@@ -21,7 +21,10 @@ class AnaliseState(rx.State):
 
         id_vaga = estado_vaga.vaga_selecionada_id
 
-        self.vaga_atual = FirebaseService().get_job(id_vaga) #type: ignore
+        if id_vaga:
+            self.vaga_atual = FirebaseService().get_job(id_vaga)
+        else:
+            self.vaga_atual = None
 
     async def receber_e_processar_arquivo(self, files: list[rx.UploadFile]):
         self.is_loading = True
@@ -63,3 +66,11 @@ class AnaliseState(rx.State):
         self.opiniao_gerada = LLM.generate_opinion(self.resumo_cv, self.vaga_atual) #type: ignore
         
         self.is_loading = False
+
+    async def set_vaga_pelo_titulo(self, titulo_selecionado: str):
+        estado_vaga = await self.get_state(ListJobsState)
+
+        vaga_encontrada = next((vaga for vaga in estado_vaga.vagas if vaga.title == titulo_selecionado), None)
+
+        if vaga_encontrada:
+            self.vaga_atual = vaga_encontrada

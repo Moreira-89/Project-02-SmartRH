@@ -1,5 +1,6 @@
 import reflex as rx
 from Project_02_SmartRH.state.listjob_state import ListJobsState
+from Project_02_SmartRH.components.layout import base_layout 
 
 def  desenhar_vaga(vaga):
     return rx.card(
@@ -19,7 +20,7 @@ def  desenhar_vaga(vaga):
 
 
 def show_jobs_page():
-    return rx.vstack(
+    conteudo = rx.vstack(
         rx.heading("Vagas Disponíveis"),
         rx.foreach(
             ListJobsState.vagas,
@@ -29,3 +30,4 @@ def show_jobs_page():
         max_width="800px",
         margin="auto"
     )
+    return base_layout(conteudo)

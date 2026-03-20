@@ -1,9 +1,10 @@
 import reflex as rx
 from Project_02_SmartRH.state.job_state import JobFormState
+from Project_02_SmartRH.components.layout import base_layout 
 
 
 def add_job_page():
-    return rx.vstack(
+    conteudo = rx.vstack(
         rx.heading("Adicionar Nova Vaga"),
         rx.input(
             placeholder="Digite o titulo da vaga",
@@ -14,3 +15,4 @@ def add_job_page():
                   on_click=JobFormState.salvar_vaga #   type: ignore
                   )
     )
+    return base_layout(conteudo)
