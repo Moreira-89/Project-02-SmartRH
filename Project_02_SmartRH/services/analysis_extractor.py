@@ -155,7 +155,7 @@ def extract_data_analysis(
     analysis_data = {
         "id": str(uuid.uuid4()),
         "job_id": job_id,
-        "resum_id": resume_id,
+        "resume_id": resume_id,
         "name": sections.get("name") or "Não identificado",
         "skills": sections.get("skills") or ["Habilidades não especificadas"],
         "education": sections.get("education") or ["Formação não especificada"],

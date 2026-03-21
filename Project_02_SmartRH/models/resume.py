@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 class Resume(BaseModel):
     id: str
@@ -10,4 +11,4 @@ class Resume(BaseModel):
     file_size: str
     upload_date: str = datetime.now().isoformat()
     status: str = "pending"
-    analysis: str = None
+    analysis: Optional[str] = None
