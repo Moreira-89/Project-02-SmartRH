@@ -10,7 +10,8 @@ def modal_detalhes():
                 HistoricoState.analise_selecionada, #type: ignore
                 rx.vstack(
                     rx.text(f"{HistoricoState.analise_selecionada.job_title}", font_weight="bold"),#type: ignore 
-                    rx.dialog.title(f"Candidato(a): {HistoricoState.analise_selecionada.name} | Score: {HistoricoState.analise_selecionada.score}/10"), #type: ignore
+                    rx.dialog.title(f"Candidato(a): {HistoricoState.analise_selecionada.name}"), #type: ignore
+                    rx.text(f"Score: {HistoricoState.analise_selecionada.score}", color=rx.cond(HistoricoState.analise_selecionada.score >= 7, "green", "red")), #type: ignore
                     rx.dialog.description(
                         rx.vstack(
                             rx.text(f"Educação/Cursos: {HistoricoState.analise_selecionada.education}"), #type: ignore
@@ -33,10 +34,11 @@ def modal_detalhes():
 
 def historico_page():
     conteudo = rx.vstack(
-        rx.heading("Histórico de Análises"),
+        rx.heading("Histórico de Análises de Candidatos"),
         rx.foreach(
-            HistoricoState.historico_analises,
-            lambda analise: rx.card(
+        HistoricoState.historico_analises,
+        lambda analise: rx.card(
+            rx.hstack(
                 rx.vstack(
                     rx.cond(
                         analise.job_title, 
@@ -44,18 +46,19 @@ def historico_page():
                         rx.text("Vaga não encontrada")
                     ),
                     rx.text(f"Nome do Candidato: {analise.name}"),
-                    rx.text(f"Resultado: {analise.score}"),
-                    rx.button("Ver Detalhes", on_click=lambda: HistoricoState.abrir_modal(analise)),#type: ignore
+                    rx.text(f"Resultado: {analise.score}", color=rx.cond(analise.score >= 7, "green", "red"), font_weight="bold"),
                     align_items="start",
                     spacing="2"
                 ),
+                rx.button("Ver Detalhes", on_click=lambda: HistoricoState.abrir_modal(analise)), # type: ignore
                 width="100%",
-                margin_bottom="1em"
-            )
+                justify="between",
+                align="center"
+            ),
+            width="100%",
+            margin_bottom="1em"
+        )
         ),
-        modal_detalhes(),
-        width="100%",
-        max_width="800px",
-        margin="auto"
+        modal_detalhes()
     )
     return base_layout(conteudo)
