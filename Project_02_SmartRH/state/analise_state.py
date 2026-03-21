@@ -1,12 +1,13 @@
 import reflex as rx
 import PyPDF2
 import io
+import uuid
 from Project_02_SmartRH.models.job import Job
 from Project_02_SmartRH.state.listjob_state import ListJobsState
 from Project_02_SmartRH.services.firebase_service import FirebaseService
 from Project_02_SmartRH.config.langchain_config import LangChainConfig
 from Project_02_SmartRH.services.langchain_service import LangChainService
-
+from Project_02_SmartRH.services.analysis_extractor import extract_data_analysis
 
 class AnaliseState(rx.State):
     resumo_cv: str = ""
@@ -74,3 +75,31 @@ class AnaliseState(rx.State):
 
         if vaga_encontrada:
             self.vaga_atual = vaga_encontrada
+
+
+    def salvar_analise(self):
+        
+        if not self.vaga_atual:
+            return
+        
+        analise_id = str(uuid.uuid4())
+
+        analise_data = extract_data_analysis(
+            resume_cv=self.resumo_cv,
+            job_id=self.vaga_atual.id, #type: ignore
+            resume_id=analise_id,
+            score=self.pontuacao_final
+        )
+        FirebaseService().create_analysis(analysis=analise_data)
+        self.resumo_cv = ""
+        self.pontuacao_final = 0.0
+        self.opiniao_gerada = ""
+        self.vaga_atual = None
+        self.curriculo_texto = ""
+        return rx.toast.success("Análise salva com sucesso!", duration=5000)
+
+
+
+
+
+

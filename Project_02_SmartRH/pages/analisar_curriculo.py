@@ -34,9 +34,10 @@ def analise_page():
                 rx.markdown(AnaliseState.resumo_cv),
                 rx.heading(f"Análise e Recomendações para vaga: {AnaliseState.vaga_atual.title}", size="6", margin_top="4"),#type: ignore
                 rx.markdown(AnaliseState.opiniao_gerada),
+                rx.button("Salvar Análise",on_click=AnaliseState.salvar_analise),#type: ignore    
                 width="100%",
                 align_items="start"
-            )
+            ),
         ),
         width="100%",
         max_width="800px",

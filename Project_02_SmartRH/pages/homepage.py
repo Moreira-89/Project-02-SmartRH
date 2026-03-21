@@ -9,6 +9,7 @@ def homepage():
         rx.button("Ver Vagas", on_click=rx.redirect("/listar-vagas")),
         rx.button("Adicionar Vaga", on_click=rx.redirect("/nova-vaga")),
         rx.button("Analisar CV", on_click=rx.redirect("/analisar-curriculo")),
+        rx.button("Histórico de Análises", on_click=rx.redirect("/historico-analise")),
         
         width="100%",
         max_width="800px",

@@ -9,6 +9,7 @@ def base_layout(conteudo_da_pagina: rx.Component) -> rx.Component:
             rx.link("Vagas", href="/listar-vagas"),
             rx.link("Adicionar Vaga", href="/nova-vaga"),
             rx.link("Analisar CV", href="/analisar-curriculo"),
+            rx.link("Histórico de Análises", href="/historico-analise"),
             width="250px",
             height="100vh",
             bg="gray.100",

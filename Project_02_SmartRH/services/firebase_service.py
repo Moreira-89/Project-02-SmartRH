@@ -37,6 +37,14 @@ class FirebaseService:
         except Exception as e:
             logger.error(f"Erro ao buscar vaga: {str(e)}")
             return None
+        
+    def get_analyses(self) -> list[Analysis]:
+        try:
+            analyses = self.rtdb.child("analises").get()
+            return [Analysis(**dict(analysis)) for analysis in analyses.values()] if analyses else [] #type: ignore
+        except Exception as e:
+            logger.error(f"Erro ao buscar análises: {str(e)}")
+            return []
 
 
     def upload_resume_file(self, file, resume_id: str) -> str:
