@@ -141,8 +141,25 @@ def parse_list_items(content: str) -> List[str]:
     if not items:
         items = [line.strip() for line in content.split('\n') if line.strip()]
     
-    # Limpa cada item
-    return [clean_item(item) for item in items if clean_item(item) != "Não especificado"]
+    # Expande itens quando vierem em formato corrido separados por vírgula/ponto e vírgula.
+    expanded_items: List[str] = []
+    for item in items:
+        comma_split = re.split(r",\s*(?=[A-ZÁÉÍÓÚÂÊÔÃÕÇ])", item)
+        parts = comma_split if len(comma_split) > 1 else re.split(r";\s*", item)
+        for part in parts:
+            cleaned = clean_item(part)
+            if cleaned != "Não especificado":
+                expanded_items.append(cleaned)
+
+    # Remove duplicatas preservando ordem.
+    unique_items: List[str] = []
+    seen = set()
+    for item in expanded_items:
+        if item not in seen:
+            seen.add(item)
+            unique_items.append(item)
+
+    return unique_items
 
 def extract_data_analysis(
     resume_cv: str, job_id: str, resume_id: str, score: float
