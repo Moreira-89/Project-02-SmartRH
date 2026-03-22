@@ -17,3 +17,5 @@ app.add_page(add_job_page, route="/nova-vaga", title="Nova Vaga")
 app.add_page(show_jobs_page, route="/listar-vagas", on_load=ListJobsState.buscar_vagas, title="Listar Vagas")#type: ignore
 app.add_page(analise_page, route="/analisar-curriculo", on_load=[ListJobsState.buscar_vagas, AnaliseState.carregar_vaga], title="Análise de Currículo") #type: ignore
 app.add_page(historico_page, route="/historico-analise", on_load=HistoricoState.buscar_historico, title="Histórico de Análises")#type: ignore
+
+# reflex deploy --envfile .env para deployar de novo
