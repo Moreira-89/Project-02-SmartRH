@@ -97,6 +97,15 @@ class AnaliseState(rx.State):
         self.vaga_atual = None
         self.curriculo_texto = ""
         return rx.toast.success("Análise salva com sucesso!", duration=5000)
+    
+    def limpar_analise(self):
+        self.resumo_cv = ""
+        self.pontuacao_final = 0.0
+        self.opiniao_gerada = ""
+        self.vaga_atual = None
+        self.curriculo_texto = ""
+        return rx.toast.success("Análise limpa com sucesso!", duration=5000)
+
 
 
 
