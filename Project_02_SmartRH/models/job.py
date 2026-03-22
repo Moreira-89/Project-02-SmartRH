@@ -8,3 +8,4 @@ class Job(BaseModel):
     prerequisites: str
     differentials: Optional[str] = None
     status: str = "active"
+    requirements_count: int = 0
