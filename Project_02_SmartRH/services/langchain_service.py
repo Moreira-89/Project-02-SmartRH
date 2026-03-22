@@ -101,8 +101,11 @@ class LangChainService():
         prompt = RESUME_PROMPT_TEMPLATE.format(cv=cv[:8000])
         try:
             result_raw = self.llm.generate_response(prompt)
+            if not isinstance(result_raw, str):
+                logger.warning(f"LLM response was not a string for resume_cv: {type(result_raw)}")
+                return None
             # Extrai o conteúdo dentro do bloco de código markdown
-            match = re.search(r"```markdown\n(.*?)\n```", result_raw, re.DOTALL)# type: ignore
+            match = re.search(r"```markdown\n(.*?)\n```", result_raw, re.DOTALL)
             if match:
                 return match.group(1).strip()
             return result_raw # Retorna o resultado bruto se o formato não for encontrado

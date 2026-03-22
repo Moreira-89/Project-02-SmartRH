@@ -183,23 +183,3 @@ def extract_data_analysis(
         analysis_data[field] = analysis_data[field][:10]  # Limita a 10 itens por seção
     
     return Analysis(**analysis_data)
-
-# NOTA: Esta função não parece estar sendo utilizada no fluxo atual dos serviços.
-# Se for necessária, pode ser integrada. Caso contrário, pode ser removida.
-def clean_analysis_data(data: dict) -> dict:
-    """Remove duplicatas e normaliza dados"""
-    for key in ["skills", "education", "languages"]:
-        if key in data and isinstance(data[key], list):
-            # Mantém a ordem original e o case do primeiro item encontrado
-            unique_items = []
-            seen = set()
-            for item in data[key]:
-                # Itens são comparados em minúsculas para evitar duplicatas de case
-                # Ex: "Python" e "python" são considerados o mesmo.
-                lower_item = item.lower()
-                if lower_item not in seen:
-                    seen.add(lower_item)
-                    unique_items.append(item)
-            data[key] = unique_items
-    
-    return data
