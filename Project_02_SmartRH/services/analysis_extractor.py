@@ -9,6 +9,25 @@ from Project_02_SmartRH.models.analysis import Analysis
 
 logger = logging.getLogger(__name__)
 
+# Padrões de Regex para extração de seções
+MARKDOWN_SECTION_PATTERNS = {
+    "name": r"(?i)^##\s*Nome\s*(Completo|do\s*Candidato)?\s*$\n(.+?)(?=\n##|\Z)",
+    "skills": r"(?i)^##\s*(Habilidades|Competências|Skills)(\s*Técnicas)?\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
+    "education": r"(?i)^##\s*(Formação|Educação|Formação\s*Acadêmica)\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
+    "languages": r"(?i)^##\s*(Idiomas|Línguas)\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
+    "experience": r"(?i)^##\s*(Experiência|Experiências)(\s*Profissional|Profissionais)?\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
+}
+
+COMMON_SECTION_KEYWORDS = {
+    "skills": [r"(?i)(habilidades|competências|skills|conhecimentos)(\s*técnicas)?:?\s*\n",
+               r"(?i)(tecnologias|ferramentas|frameworks|languages|linguagens)(\s*utilizadas)?:?\s*\n"],
+    "education": [r"(?i)(formação|educação|academic)(\s*acadêmica)?:?\s*\n",
+                  r"(?i)(graduação|curso superior|diploma|degree):?\s*\n"],
+    "languages": [r"(?i)(idiomas|línguas|languages):?\s*\n"],
+    "experience": [r"(?i)(experiência|experiências)(\s*profissional|profissionais)?:?\s*\n",
+                   r"(?i)(histórico profissional|career history):?\s*\n"]
+}
+
 def read_file(file_path: str) -> str:
     """Extrai texto de arquivos PDF ou DOCX baseado na extensão do arquivo"""
     try:
@@ -57,14 +76,6 @@ def extract_sections_from_text(text: str) -> Dict[str, Any]:
 
 def extract_markdown_sections(text: str) -> Dict[str, Any]:
     """Extrai seções de um texto formatado em markdown"""
-    patterns = {
-        "name": r"(?i)^##\s*Nome\s*(Completo|do\s*Candidato)?\s*$\n(.+?)(?=\n##|\Z)",
-        "skills": r"(?i)^##\s*(Habilidades|Competências|Skills)(\s*Técnicas)?\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
-        "education": r"(?i)^##\s*(Formação|Educação|Formação\s*Acadêmica)\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
-        "languages": r"(?i)^##\s*(Idiomas|Línguas)\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
-        "experience": r"(?i)^##\s*(Experiência|Experiências)(\s*Profissional|Profissionais)?\s*$\n((?:.*\n)+?)(?=\n##|\Z)",
-    }
-    
     sections = {
         "name": None,
         "skills": [],
@@ -73,7 +84,7 @@ def extract_markdown_sections(text: str) -> Dict[str, Any]:
         "experience": []
     }
     
-    for section, pattern in patterns.items():
+    for section, pattern in MARKDOWN_SECTION_PATTERNS.items():
         try:
             match = re.search(pattern, text, re.MULTILINE | re.DOTALL)
             if match:
@@ -102,18 +113,7 @@ def extract_common_sections(text: str) -> Dict[str, Any]:
     if name_match:
         sections["name"] = clean_item(name_match.group(1))
     
-    # Keywords para identificar seções
-    keywords = {
-        "skills": [r"(?i)(habilidades|competências|skills|conhecimentos)(\s*técnicas)?:?\s*\n",
-                  r"(?i)(tecnologias|ferramentas|frameworks|languages|linguagens)(\s*utilizadas)?:?\s*\n"],
-        "education": [r"(?i)(formação|educação|academic)(\s*acadêmica)?:?\s*\n",
-                     r"(?i)(graduação|curso superior|diploma|degree):?\s*\n"],
-        "languages": [r"(?i)(idiomas|línguas|languages):?\s*\n"],
-        "experience": [r"(?i)(experiência|experiências)(\s*profissional|profissionais)?:?\s*\n",
-                      r"(?i)(histórico profissional|career history):?\s*\n"]
-    }
-    
-    for section, patterns in keywords.items():
+    for section, patterns in COMMON_SECTION_KEYWORDS.items():
         for pattern in patterns:
             match = re.search(pattern, text, re.MULTILINE | re.DOTALL)
             if match:
@@ -184,29 +184,22 @@ def extract_data_analysis(
     
     return Analysis(**analysis_data)
 
+# NOTA: Esta função não parece estar sendo utilizada no fluxo atual dos serviços.
+# Se for necessária, pode ser integrada. Caso contrário, pode ser removida.
 def clean_analysis_data(data: dict) -> dict:
     """Remove duplicatas e normaliza dados"""
-    # Unifica nomenclaturas diferentes para o mesmo conceito
-    if "Formação Acadêmica" in data and "Educação" in data:
-        data["education"] = data.pop("Formação Acadêmica") + data.pop("Educação")
-    
-    if "Habilidades" in data and "Skills" in data:
-        data["skills"] = data.pop("Habilidades") + data.pop("Skills")
-    
-    # Remove duplicatas e normaliza dados
     for key in ["skills", "education", "languages"]:
         if key in data and isinstance(data[key], list):
-            # Normaliza (lowercase) antes de remover duplicatas
-            normalized = [item.lower() for item in data[key]]
-            unique_indices = []
+            # Mantém a ordem original e o case do primeiro item encontrado
+            unique_items = []
             seen = set()
-            
-            for i, item in enumerate(normalized):
-                if item not in seen:
-                    seen.add(item)
-                    unique_indices.append(i)
-            
-            # Usa os índices únicos para manter os itens originais (não normalizados)
-            data[key] = [data[key][i] for i in unique_indices]
+            for item in data[key]:
+                # Itens são comparados em minúsculas para evitar duplicatas de case
+                # Ex: "Python" e "python" são considerados o mesmo.
+                lower_item = item.lower()
+                if lower_item not in seen:
+                    seen.add(lower_item)
+                    unique_items.append(item)
+            data[key] = unique_items
     
     return data
