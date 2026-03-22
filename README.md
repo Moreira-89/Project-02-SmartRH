@@ -1,142 +1,160 @@
-# Smart RH 💼
-
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
-[![Reflex](https://img.shields.io/badge/Reflex-Framework-black.svg)](https://reflex.dev/)
-[![Firebase](https://img.shields.io/badge/Firebase-Admin-yellow.svg)](https://firebase.google.com/)
-
-Sistema inteligente de recrutamento que conecta candidatos às melhores oportunidades utilizando processamento de linguagem natural para analisar currículos e vagas.
-
-## 📋 Índice
-
-- [Visão Geral](#-visão-geral)
-- [Funcionalidades](#-funcionalidades)
-- [Tecnologias](#-tecnologias)
-- [Arquitetura](#-arquitetura)
-- [Instalação](#-instalação)
-- [Configuração](#-configuração)
-- [Uso](#-uso)
-- [Roadmap](#-roadmap)
-- [Contribuição](#-contribuição)
-- [Licença](#-licença)
-
-## 🔍 Visão Geral
-
-Smart RH é uma aplicação web desenvolvida com Reflex que auxilia profissionais de recrutamento e seleção a analisar currículos de forma inteligente, comparando-os com os requisitos das vagas cadastradas. O sistema utiliza o modelo Llama-3.3-70b para extrair informações relevantes dos currículos e calcular um score de compatibilidade com as vagas disponíveis.
-
-## 🚀 Funcionalidades
-
-- **🧠 Análise de Currículos com IA**: Upload e análise automática de currículos com algoritmos avançados de processamento de linguagem natural
-- **📊 Compatibilidade Inteligente**: Score de 0-10 entre currículos e vagas cadastradas
-- **📝 Cadastro Detalhado de Vagas**: Interface intuitiva para recrutar com informações completas sobre requisitos
-- **📋 Gestão de Oportunidades**: Visualização organizada de todas as vagas disponíveis
-- **📄 Extração Automática de Dados**: Identificação de habilidades, formação acadêmica, experiências e idiomas
-- **💡 Insights Personalizados**: Recomendações para candidatos com base na análise do perfil
-
-## 💻 Tecnologias
+# SmartRH
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Backend-Python%20|%20Reflex-blue" alt="Backend"/>
-  <img src="https://img.shields.io/badge/IA-LangChain%20|%20Llama--3.3--70b-green" alt="IA"/>
-  <img src="https://img.shields.io/badge/Database-Firebase%20Realtime%20DB-yellow" alt="Database"/>
+  <img src="https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Reflex-0.8.28-111827?style=for-the-badge" alt="Reflex" />
+  <img src="https://img.shields.io/badge/Firebase-Realtime%20DB-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase" />
+  <img src="https://img.shields.io/badge/LangChain-Groq-0B3B2E?style=for-the-badge" alt="LangChain Groq" />
 </p>
 
-- **Frontend & Backend**: [Reflex](https://reflex.dev/) - Framework Python moderno para criação de aplicações web completas
-- **Backend**: Python 3.9+ - Linguagem principal para lógica de negócio e processamento
-- **Banco de Dados**: [Firebase Realtime Database](https://firebase.google.com/) - Armazenamento em tempo real na nuvem
-- **NLP**: [LangChain](https://python.langchain.com/) com [Groq](https://groq.com/) - Framework para aplicações baseadas em LLMs
-- **Modelo de IA**: Llama-3.3-70b - Modelo de linguagem de ponta
-- **Parser de Documentos**: PyMuPDF, python-docx - Extração de texto de PDFs e DOCXs
+<p align="center">
+  Plataforma de recrutamento inteligente com análise de currículos por IA, score de aderência e histórico de avaliações.
+</p>
 
+---
 
-## 🏗️ Arquitetura
+## Sumário
 
-O projeto foi refatorado para utilizar a arquitetura moderna baseada em **Componentes (Pages)** e **Estado (State)** adaptada para aplicações Reflex:
+- [Visão Geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Stack](#stack)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Instalação](#instalação)
+- [Configuração de Ambiente](#configuração-de-ambiente)
+- [Executando o Projeto](#executando-o-projeto)
+- [Fluxo Recomendado](#fluxo-recomendado)
+- [Observações](#observações)
+- [Contribuição](#contribuição)
+
+## Visão Geral
+
+O SmartRH automatiza parte do processo de triagem de currículos com base nos requisitos de cada vaga.
+
+Objetivos principais:
+- centralizar vagas e critérios de seleção
+- comparar currículos com vagas usando score de compatibilidade (0 a 10)
+- gerar resumo estruturado e recomendações via LLM
+- manter histórico consultável de análises
+
+## Funcionalidades
+
+### Cadastro de vagas
+- título, atividades principais, pré-requisitos e diferenciais
+- contagem automática de requisitos (`requirements_count`)
+
+### Página de vagas (UX aprimorada)
+- busca por termo (título, atividade ou requisito)
+- filtro por status
+- cards com preview de conteúdo
+- modal com detalhes completos
+- ação rápida: `Analisar CV desta vaga`
+
+### Análise de currículo com IA
+- upload de currículo em PDF
+- seleção da vaga alvo
+- score de compatibilidade
+- resumo estruturado e recomendações
+- opção de salvar ou limpar análise
+
+### Histórico de análises
+- listagem de análises anteriores
+- modal com dados estruturados (educação, skills e idiomas)
+
+### Front-end
+- tema dark responsivo
+- componentes construídos com `rx.*`
+
+## Stack
+
+- **Python**
+- **Reflex** (`reflex~=0.8.28`)
+- **Firebase Admin SDK** (Realtime Database + Storage)
+- **LangChain + Groq** (`langchain-groq`)
+- **PyPDF2 / pdfminer / python-docx**
+
+## Estrutura do Projeto
 
 ```text
 Project-02-SmartRH/
-├── rxconfig.py                      # Configurações gerais do app Reflex
-└── Project_02_SmartRH/              # Diretório raiz do projeto principal
-    ├── Project_02_SmartRH.py        # Ponto de entrada (Registro de Páginas/Rotas)
-    ├── config/                      # Configurações e variáveis de ambiente
+├── rxconfig.py
+├── requirements.txt
+├── README.md
+└── Project_02_SmartRH/
+    ├── Project_02_SmartRH.py          # Registro de rotas/páginas
+    ├── components/
+    │   └── layout.py                  # Layout base e navegação
+    ├── config/
     │   ├── firebase_config.py
     │   └── langchain_config.py
-    ├── models/                      # Estruturas de dados (Pydantic)
+    ├── models/
     │   ├── analysis.py
     │   ├── job.py
     │   └── resume.py
-    ├── pages/                       # Componentes de UI e Telas
+    ├── pages/
+    │   ├── homepage.py
     │   ├── add_job.py
+    │   ├── show_jobs_page.py
     │   ├── analisar_curriculo.py
-    │   └── show_jobs_page.py
-    ├── state/                       # Lógica de interface e estado global
-    │   ├── analise_state.py
-    │   └── listjob_state.py
-    └── services/                    # Lógica de negócio, IA e integrações
-        ├── analysis_extractor.py
-        ├── firebase_service.py
-        └── langchain_service.py
+    │   └── historico_page.py
+    ├── services/
+    │   ├── firebase_service.py
+    │   ├── langchain_service.py
+    │   └── analysis_extractor.py
+    └── state/
+        ├── job_state.py
+        ├── listjob_state.py
+        ├── analise_state.py
+        └── historico_state.py
 ```
 
-## 📦 Instalação
+## Instalação
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/smart-rh.git
-   cd smart-rh
-   ```
-
-2. Crie um ambiente virtual:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # No Windows: venv\Scripts\activate
-   ```
-
-3. Instale as dependências:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## ⚙️ Configuração
-
-1. Crie um projeto no [Firebase](https://console.firebase.google.com/)
-2. Configure um Realtime Database e Storage
-3. Gere uma chave privada para o SDK Admin
-4. Crie um arquivo `.env` com as seguintes configurações:
-
-```toml
-[FIREBASE]
-PROJECT_ID = "seu-projeto-id"
-DATABASE_URL = "https://seu-projeto-id.firebaseio.com"
-STORAGE_BUCKET = "seu-projeto-id.appspot.com"
-CLIENT_EMAIL = "firebase-adminsdk-xxxx@seu-projeto-id.iam.gserviceaccount.com"
-DATABASE_SECRET = "-----BEGIN PRIVATE KEY-----\nSua chave privada\n-----END PRIVATE KEY-----\n"
-
-[LANGCHAIN_GROG]
-API_KEY = "seu-api-key-groq"
+```bash
+git clone <url-do-repositorio>
+cd Project-02-SmartRH
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-## 🖥️ Uso
+## Configuração de Ambiente
 
-1. Inicie a aplicação:
-   ```bash
-   # Na pasta raiz onde está o rxconfig.py
-   reflex run
-   ```
+Crie um arquivo `.env` na raiz do projeto:
 
-2. Acesse a aplicação em seu navegador em `http://localhost:3000`
+```env
+FIREBASE_PROJECT_ID=seu-projeto-id
+FIREBASE_DATABASE_URL=https://seu-projeto-default-rtdb.firebaseio.com
+FIREBASE_STORAGE_BUCKET=seu-projeto.appspot.com
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxx@seu-projeto.iam.gserviceaccount.com
+FIREBASE_DATABASE_SECRET="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 
-3. Fluxo básico:
-   - Cadastre uma nova vaga em "Cadastrar Vaga"
-   - Visualize as vagas em "Visualizar Vagas"
-   - Faça upload de um currículo em "Análise com IA"
-   - Receba a análise detalhada e o score de compatibilidade
+LANGCHAIN_GROQ_API_KEY=sua-chave-groq
+```
 
-## 👥 Contribuição
+## Executando o Projeto
 
-Contribuições são bem-vindas! Para contribuir:
+```bash
+reflex run
+```
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
-3. Faça commit das suas alterações (`git commit -am 'Adiciona nova funcionalidade'`)
-4. Faça push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
+Abra no navegador: `http://localhost:3000`
+
+## Fluxo Recomendado
+
+1. Cadastre uma vaga em `Adicionar Vaga`.
+2. Localize a vaga em `Vagas` usando busca/filtro.
+3. Clique em `Analisar CV desta vaga`.
+4. Envie o PDF e rode a análise.
+5. Salve o resultado no histórico.
+6. Consulte os detalhes em `Histórico de Análises`.
+
+## Observações
+
+- Persistência em Firebase Realtime Database.
+- Registros antigos podem não ter campos novos; existe fallback para `requirements_count` na listagem de vagas.
+
+## Contribuição
+
+1. Crie uma branch para sua alteração.
+2. Faça commit das mudanças.
+3. Abra um Pull Request.
