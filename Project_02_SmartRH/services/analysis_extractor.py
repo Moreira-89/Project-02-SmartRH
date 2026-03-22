@@ -91,8 +91,9 @@ def extract_markdown_sections(text: str) -> Dict[str, Any]:
                 if section == "name":
                     sections[section] = clean_item(match.group(2))
                 else:
-                    content = match.group(match.lastindex).strip() #type: ignore
-                    sections[section] = parse_list_items(content)
+                    if match.lastindex is not None:
+                        content = match.group(match.lastindex).strip()
+                        sections[section] = parse_list_items(content)
         except Exception as e:
             logger.error(f"Erro ao extrair seção {section}: {str(e)}")
     
