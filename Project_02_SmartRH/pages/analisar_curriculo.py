@@ -3,7 +3,8 @@ from Project_02_SmartRH.state.analise_state import AnaliseState
 from Project_02_SmartRH.components.layout import base_layout 
 from Project_02_SmartRH.state.listjob_state import ListJobsState
 
-def analise_page():
+@rx.page(title="Análise de Currículo")
+def analise_page() -> rx.Component:
     conteudo = rx.vstack(
         rx.heading("Análise de Currículo com IA", size="7"),
         rx.select(

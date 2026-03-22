@@ -32,7 +32,8 @@ def modal_detalhes():
         open=HistoricoState.on_modal, # 2. Variável booleana de controle
     )
 
-def historico_page():
+@rx.page(title="Histórico de Análises")
+def historico_page() -> rx.Component:
     conteudo = rx.vstack(
         rx.heading("Histórico de Análises de Candidatos"),
         rx.foreach(
