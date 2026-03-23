@@ -1,6 +1,5 @@
 reflex~=0.8.28
 firebase-admin~=6.7.0
-pandas~=2.2.3
 langchain-groq~=0.3.2
 pymupdf~=1.25.5
 pdfminer.six
